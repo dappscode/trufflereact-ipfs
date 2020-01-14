@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-import Blocpic from './abis/Blocpic.json'
+import Blocpic from '../abis/Blocpic.json'
 
 const React = require('react')
 const ipfsClient = require('ipfs-http-client');
@@ -65,9 +65,7 @@ class App extends React.Component {
     let ipfsId
     this.ipfs.add([...files], { progress: (prog) => console.log(`received: ${prog}`) })
       .then((response) => {
-        console.log(response)
         ipfsId = response[0].hash
-        console.log(ipfsId)
         this.setState({ blocpicHash: ipfsId })
         this.state.contract.methods.set(response[0].hash).send({ from: this.state.account }).then((r) => {
           return this.setState({ blocpicHash: response[0].hash })
@@ -88,7 +86,7 @@ class App extends React.Component {
           href="creablock.io"
           target="_blank"
           rel="noopener noreferrer">
-          <img alt='' src={'https://ipfs.infura.io/ipfs/'+ this.state.blocpicHash } />
+          <img alt='' src={'https://ipfs.io/ipfs/' + this.state.blocpicHash} />
         </a>
         <form id='captureMedia' onSubmit={this.handleSubmit}>
           <input type='file' onChange={this.captureFile} /><br/>
